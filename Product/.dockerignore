@@ -1,0 +1,12 @@
+.git
+.gitignore
+.mvn
+target/
+.idea
+*.iws
+*.iml
+*.ipr
+.settings
+.project
+.classpath
+
