@@ -1,0 +1,110 @@
+version: '3.8'
+
+networks:
+  microservices-network:
+    name: microservices-network
+
+services:
+  # Figure out a way to remove the dependency of creating container
+  # capstone-base for being to use its image in another dependent
+  # container.
+  capstone-base:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: capstone-base
+
+  cart-service:
+    container_name: cart-service
+    depends_on:
+      - capstone-base
+    build:
+      context: .
+      dockerfile: Cart/Dockerfile
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - microservices-network
+
+  order-service:
+    container_name: order-service
+    depends_on:
+      - capstone-base
+    build:
+      context: .
+      dockerfile: Order/Dockerfile
+    ports:
+      - "8081:8080"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - microservices-network
+
+  payment-service:
+    container_name: payment-service
+    depends_on:
+      - capstone-base
+    build:
+      context: .
+      dockerfile: Payment/Dockerfile
+    ports:
+      - "8082:8080"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - microservices-network
+
+  product-service:
+    container_name: product-service
+    depends_on:
+      - capstone-base
+    build:
+      context: .
+      dockerfile: Product/Dockerfile
+    ports:
+      - "8083:8080"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - microservices-network
+
+  user-service:
+    container_name: user-service
+    depends_on:
+      - capstone-base
+    build:
+      context: .
+      dockerfile: User/Dockerfile
+    ports:
+      - "8084:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - microservices-network
