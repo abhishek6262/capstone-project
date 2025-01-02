@@ -1,13 +1,24 @@
 package dev.abhishekprakash.product.DTOs;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
-import lombok.Value;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Value
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 public class ProductDTO {
 
-    Integer id;
+    Long id;
 
     String title;
 
@@ -18,5 +29,11 @@ public class ProductDTO {
     String description;
 
     String image;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    LocalDateTime createdAt;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    LocalDateTime updatedAt;
 
 }
