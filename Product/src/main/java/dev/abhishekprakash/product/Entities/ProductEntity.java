@@ -1,17 +1,16 @@
 package dev.abhishekprakash.product.Entities;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "products")
@@ -19,24 +18,25 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+@Data
 public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private Long id;
 
-    String title;
+    private String title;
 
-    BigDecimal price;
+    private BigDecimal price;
 
-    String category;
+    @ManyToOne
+    private CategoryEntity category;
 
     @Column(columnDefinition = "TEXT")
     @Lob
-    String description;
+    private String description;
 
-    String image;
+    private String image;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)

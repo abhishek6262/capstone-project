@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import dev.abhishekprakash.product.Entities.CategoryEntity;
 import jakarta.validation.constraints.*;
 
 import lombok.AllArgsConstructor;
@@ -31,7 +32,7 @@ public class ProductResponseDTO {
     private BigDecimal price;
 
     @NotBlank(message = "Category is required")
-    private String category;
+    private CategoryEntity category;
 
     @Size(max = 2000, message = "Description cannot exceed 2000 characters")
     private String description;
