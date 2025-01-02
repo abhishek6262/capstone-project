@@ -2,6 +2,7 @@ package dev.abhishekprakash.product.Services;
 
 import dev.abhishekprakash.product.DTOs.ProductResponseDTO;
 import dev.abhishekprakash.product.Entities.ProductEntity;
+import dev.abhishekprakash.product.Exceptions.ProductNotFoundException;
 import dev.abhishekprakash.product.Mappers.ProductMapper;
 import dev.abhishekprakash.product.Repositories.ProductRepository;
 import org.springframework.data.domain.Page;
@@ -31,4 +32,10 @@ public class ProductService {
         return productEntities.map(productMapper::toDto);
     }
 
+    public ProductResponseDTO getProduct(Long id) {
+        ProductEntity productEntity = productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product with ID " + id + " not found"));
+
+        return productMapper.toDto(productEntity);
+    }
 }
