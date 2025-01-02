@@ -1,4 +1,4 @@
-package dev.abhishekprakash.product.Configs;
+package dev.abhishekprakash.product.Config;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +15,7 @@ public class RestTemplateConfig {
     }
     
     @Bean
-    public RestTemplate restTemplate() {
+    RestTemplate restTemplate() {
         return restTemplateBuilder.build();
     }
 

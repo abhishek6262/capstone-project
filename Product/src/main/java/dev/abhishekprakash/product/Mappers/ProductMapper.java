@@ -3,20 +3,22 @@ package dev.abhishekprakash.product.Mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import dev.abhishekprakash.product.DTOs.ProductDTO;
+import dev.abhishekprakash.product.DTOs.ProductResponseDTO;
 import dev.abhishekprakash.product.Entities.ProductEntity;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
-    @Mapping(target = "category", source = "category")
-    @Mapping(target = "description", source = "description")
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "image", source = "image")
-    @Mapping(target = "price", source = "price")
-    @Mapping(target = "title", source = "title")
-    ProductDTO toDto(ProductEntity productEntity);
+    @Mapping(source = "id",          target = "id")
+    @Mapping(source = "title",       target = "title")
+    @Mapping(source = "category",    target = "category")
+    @Mapping(source = "description", target = "description")
+    @Mapping(source = "image",       target = "image")
+    @Mapping(source = "price",       target = "price")
+    @Mapping(source = "createdAt",   target = "createdAt")
+    @Mapping(source = "updatedAt",   target = "updatedAt")
+    ProductResponseDTO toDto(ProductEntity productEntity);
     
-    @Mapping(target = "createdAt", source = "createdAt")
-    @Mapping(target = "updatedAt", source = "updatedAt")
-    ProductEntity toEntity(ProductDTO productDTO);
+    @Mapping(source = "createdAt",  target = "createdAt")
+    @Mapping(source = "updatedAt",  target = "updatedAt")
+    ProductEntity toEntity(ProductResponseDTO productDTO);
 }

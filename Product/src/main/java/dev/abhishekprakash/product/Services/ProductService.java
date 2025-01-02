@@ -1,6 +1,6 @@
 package dev.abhishekprakash.product.Services;
 
-import dev.abhishekprakash.product.DTOs.ProductDTO;
+import dev.abhishekprakash.product.DTOs.ProductResponseDTO;
 import dev.abhishekprakash.product.Entities.ProductEntity;
 import dev.abhishekprakash.product.Mappers.ProductMapper;
 import dev.abhishekprakash.product.Repositories.ProductRepository;
@@ -23,7 +23,7 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductDTO> getProducts(Optional<String> productCategory, Pageable pageable) {
+    public Page<ProductResponseDTO> getProducts(Optional<String> productCategory, Pageable pageable) {
         Page<ProductEntity> productEntities = productCategory.isPresent() ?
                 productRepository.findAllByCategory(productCategory.get(), pageable) :
                 productRepository.findAll(pageable);
