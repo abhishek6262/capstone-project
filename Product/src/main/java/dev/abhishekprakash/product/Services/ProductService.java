@@ -23,9 +23,9 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductResponseDTO> getProducts(Optional<String> productCategory, Pageable pageable) {
-        Page<ProductEntity> productEntities = productCategory.isPresent() ?
-                productRepository.findAllByCategory(productCategory.get(), pageable) :
+    public Page<ProductResponseDTO> getProducts(Optional<Long> categoryId, Pageable pageable) {
+        Page<ProductEntity> productEntities = categoryId.isPresent() ?
+                productRepository.findAllByCategory_Id(categoryId.get(), pageable) :
                 productRepository.findAll(pageable);
 
         return productEntities.map(productMapper::toDto);
