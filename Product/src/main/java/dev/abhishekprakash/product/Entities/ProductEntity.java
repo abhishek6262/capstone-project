@@ -1,5 +1,7 @@
 package dev.abhishekprakash.product.Entities;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -12,7 +14,7 @@ public class ProductEntity {
 
     String title;
 
-    Double price;
+    BigDecimal price;
 
     String category;
 

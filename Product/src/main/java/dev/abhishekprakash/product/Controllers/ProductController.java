@@ -1,8 +1,9 @@
 package dev.abhishekprakash.product.Controllers;
 
-import dev.abhishekprakash.product.Entities.ProductEntity;
+import dev.abhishekprakash.product.DTOs.ProductDTO;
 import dev.abhishekprakash.product.Services.ProductService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +24,14 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ProductEntity>> getProducts(
+    public ResponseEntity<Page<ProductDTO>> getProducts(
             @RequestParam(value = "category", required = false) Optional<String> category,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "10") Integer size
     ) {
-        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        Pageable pageable = PageRequest.of(page, size);
 
-        Page<ProductEntity> products = productService.getProducts(category, pageable);
+        Page<ProductDTO> products = productService.getProducts(category, pageable);
 
         return ResponseEntity.ok(products);
     }
