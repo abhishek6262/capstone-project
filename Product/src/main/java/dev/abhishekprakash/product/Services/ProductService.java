@@ -1,10 +1,11 @@
 package dev.abhishekprakash.product.Services;
 
-import dev.abhishekprakash.product.DTOs.ProductDTO;
+import dev.abhishekprakash.product.Entities.ProductEntity;
 import dev.abhishekprakash.product.Repositories.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,15 +17,12 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<ProductDTO> getProducts(Optional<String> productCategory, Integer page, Integer size) {
-        if (page < 1) throw new IllegalArgumentException("The `page` cannot be less than 1.");
-        else if (size < 1) throw new IllegalArgumentException("The `size` cannot be less than 1.");
-
+    public Page<ProductEntity> getProducts(Optional<String> productCategory, Pageable pageable) {
         if (productCategory.isPresent()) {
-            return productRepository.getProductsByCategory(productCategory.get(), page, size);
+            return productRepository.findAllByCategory(productCategory.get(), pageable);
         }
 
-        return productRepository.getProducts(page, size);
+        return productRepository.findAll(pageable);
     }
 
 }

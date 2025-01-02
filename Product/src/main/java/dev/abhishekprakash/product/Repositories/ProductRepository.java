@@ -1,26 +1,11 @@
 package dev.abhishekprakash.product.Repositories;
 
-import dev.abhishekprakash.product.Clients.ProductClient;
-import dev.abhishekprakash.product.DTOs.ProductDTO;
-import org.springframework.stereotype.Repository;
+import dev.abhishekprakash.product.Entities.ProductEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 
-@Repository
-public class ProductRepository {
-
-    private final ProductClient productClient;
-
-    public ProductRepository(ProductClient productClient) {
-        this.productClient = productClient;
-    }
-
-    public List<ProductDTO> getProducts(Integer page, Integer size) {
-        return productClient.getProducts(page, size);
-    }
-
-    public List<ProductDTO> getProductsByCategory(String productCategory, Integer page, Integer size) {
-        return productClient.getProductsByCategory(productCategory, page, size);
-    }
-
+public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
+    Page<ProductEntity> findAllByCategory(String category, Pageable pageable);
 }
