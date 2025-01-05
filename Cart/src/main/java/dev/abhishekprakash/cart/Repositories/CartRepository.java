@@ -1,30 +1,26 @@
 package dev.abhishekprakash.cart.Repositories;
 
-import dev.abhishekprakash.cart.Entities.CartItem;
+import dev.abhishekprakash.cart.Entities.CartItemEntity;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.HashMap;
 
 @Repository
 public class CartRepository {
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<Object, Object> redisTemplate;
 
-    public CartRepository(RedisTemplate<String, Object> redisTemplate) {
+    public CartRepository(RedisTemplate<Object, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
-    public List<CartItem> getCartItems(Long userId) {
-        List<Object> cartItems = redisTemplate.opsForList().range(userId.toString(), 0, -1);
-
-        if (cartItems == null) return List.of();
-
-        return cartItems.stream().map(CartItem.class::cast).toList();
+    public HashMap<Object, Object> getCartItems(Long userId) {
+        return (HashMap<Object, Object>) redisTemplate.opsForHash().entries(userId);
     }
 
-    public void addCartItem(Long userId, CartItem cartItem) {
-        redisTemplate.opsForList().rightPush(userId.toString(), cartItem);
+    public void addCartItem(Long userId, Long productId, CartItemEntity cartItemEntity) {
+        redisTemplate.opsForHash().put(userId, productId, cartItemEntity);
     }
 
 }

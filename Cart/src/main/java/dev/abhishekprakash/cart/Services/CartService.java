@@ -1,33 +1,32 @@
 package dev.abhishekprakash.cart.Services;
 
 import dev.abhishekprakash.cart.DTOs.AddCartItemDTO;
-import dev.abhishekprakash.cart.DTOs.CartItemDTO;
-import dev.abhishekprakash.cart.Mappers.CartItemMapper;
+import dev.abhishekprakash.cart.Entities.CartItemEntity;
 import dev.abhishekprakash.cart.Repositories.CartRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.HashMap;
 
 @Service
 public class CartService {
 
-    private final CartItemMapper cartItemMapper;
     private final CartRepository cartRepository;
 
-    public CartService(CartItemMapper cartItemMapper, CartRepository cartRepository) {
-        this.cartItemMapper = cartItemMapper;
+    public CartService(CartRepository cartRepository) {
         this.cartRepository = cartRepository;
     }
 
-    public List<CartItemDTO> getCartItems(Long userId) {
-        return cartRepository.getCartItems(userId)
-                .stream()
-                .map(cartItemMapper::toResponseDto)
-                .toList();
+    public HashMap<Object, Object> getCartItems(Long userId) {
+        return cartRepository.getCartItems(userId);
     }
 
     public void addCartItem(Long userId, AddCartItemDTO addCartItemDTO) {
-        cartRepository.addCartItem(userId, cartItemMapper.fromRequest(addCartItemDTO));
+        Long productId = addCartItemDTO.getProductId();
+        Integer quantity = addCartItemDTO.getQuantity();
+
+        CartItemEntity cartItemEntity = new CartItemEntity("Product Name", quantity);
+
+        cartRepository.addCartItem(userId, productId, cartItemEntity);
     }
 
 }
