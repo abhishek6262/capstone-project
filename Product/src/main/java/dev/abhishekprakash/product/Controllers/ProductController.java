@@ -4,6 +4,8 @@ import dev.abhishekprakash.product.DTOs.ProductResponseDTO;
 import dev.abhishekprakash.product.Services.ProductService;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +29,7 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<Page<ProductResponseDTO>> getProducts(
             @RequestParam(required = false) Optional<Long> categoryId,
-            @RequestParam(defaultValue = "0") @Min(0) Integer page,
+            @RequestParam(defaultValue = "0") @PositiveOrZero Integer page,
             @RequestParam(defaultValue = "10") @Min(1) @Max(100) Integer size
     ) {
         Pageable pageable = PageRequest.of(page, size);
@@ -36,7 +38,7 @@ public class ProductController {
     }
 
     @GetMapping("{productId}")
-    public ResponseEntity<ProductResponseDTO> getProduct(@PathVariable Long productId) {
+    public ResponseEntity<ProductResponseDTO> getProduct(@PathVariable @Positive Long productId) {
         return ResponseEntity.ok(productService.getProductById(productId));
     }
 

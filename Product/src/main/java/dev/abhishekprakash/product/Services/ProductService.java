@@ -33,7 +33,8 @@ public class ProductService {
     }
 
     public ProductResponseDTO getProductById(Long id) {
-        ProductEntity productEntity = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product not found with the id: " + id));
+        ProductEntity productEntity = productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found with the id [" + id + "]."));
 
         return productMapper.toDto(productEntity);
     }
