@@ -2,6 +2,7 @@ package dev.abhishekprakash.product.Services;
 
 import dev.abhishekprakash.product.DTOs.ProductResponseDTO;
 import dev.abhishekprakash.product.Entities.ProductEntity;
+import dev.abhishekprakash.product.Exceptions.ProductNotFoundException;
 import dev.abhishekprakash.product.Mappers.ProductMapper;
 import dev.abhishekprakash.product.Repositories.ProductRepository;
 import org.springframework.data.domain.Page;
@@ -23,12 +24,18 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductResponseDTO> getProducts(Optional<String> productCategory, Pageable pageable) {
-        Page<ProductEntity> productEntities = productCategory.isPresent() ?
-                productRepository.findAllByCategory(productCategory.get(), pageable) :
+    public Page<ProductResponseDTO> getProducts(Optional<Long> categoryId, Pageable pageable) {
+        Page<ProductEntity> productEntities = categoryId.isPresent() ?
+                productRepository.findAllByCategory_Id(categoryId.get(), pageable) :
                 productRepository.findAll(pageable);
 
         return productEntities.map(productMapper::toDto);
+    }
+
+    public ProductResponseDTO getProductById(Long id) {
+        ProductEntity productEntity = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product not found with the id: " + id));
+
+        return productMapper.toDto(productEntity);
     }
 
 }
