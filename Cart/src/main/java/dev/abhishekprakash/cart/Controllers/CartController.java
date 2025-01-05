@@ -2,6 +2,9 @@ package dev.abhishekprakash.cart.Controllers;
 
 import dev.abhishekprakash.cart.DTOs.AddCartItemDTO;
 import dev.abhishekprakash.cart.Services.CartService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,14 +21,14 @@ public class CartController {
     }
 
     @GetMapping
-    public ResponseEntity<HashMap<Object, Object>> getCartItems(@PathVariable("userId") Long userId) {
+    public ResponseEntity<HashMap<Object, Object>> getCartItems(@PathVariable @Positive Long userId) {
         return ResponseEntity.ok(cartService.getCartItems(userId));
     }
 
     @PostMapping
     public ResponseEntity<String> addCartItem(
-            @PathVariable("userId") Long userId,
-            @RequestBody AddCartItemDTO addCartItemDTO
+            @PathVariable @Positive Long userId,
+            @RequestBody @Valid AddCartItemDTO addCartItemDTO
     ) {
         cartService.addCartItem(userId, addCartItemDTO);
 
@@ -34,8 +37,8 @@ public class CartController {
 
     @DeleteMapping
     public ResponseEntity<String> removeCartItem(
-            @PathVariable("userId") Long userId,
-            @RequestParam Long productId
+            @PathVariable @Positive Long userId,
+            @RequestParam @Positive Long productId
     ) {
         cartService.removeCartItem(userId, productId);
 
