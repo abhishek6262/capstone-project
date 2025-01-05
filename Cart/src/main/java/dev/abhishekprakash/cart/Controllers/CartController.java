@@ -32,4 +32,14 @@ public class CartController {
         return ResponseEntity.ok("Added item to cart");
     }
 
+    @DeleteMapping
+    public ResponseEntity<String> removeCartItem(
+            @PathVariable("userId") Long userId,
+            @RequestParam Long productId
+    ) {
+        cartService.removeCartItem(userId, productId);
+
+        return ResponseEntity.ok("Removed item from cart");
+    }
+
 }

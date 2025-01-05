@@ -23,4 +23,8 @@ public class CartRepository {
         redisTemplate.opsForHash().put(userId, productId, cartItemEntity);
     }
 
+    public void removeCartItem(Long userId, Long productId) {
+        redisTemplate.opsForHash().delete(userId, productId);
+    }
+
 }

@@ -29,4 +29,8 @@ public class CartService {
         cartRepository.addCartItem(userId, productId, cartItemEntity);
     }
 
+    public void removeCartItem(Long userId, Long productId) {
+        cartRepository.removeCartItem(userId, productId);
+    }
+
 }
