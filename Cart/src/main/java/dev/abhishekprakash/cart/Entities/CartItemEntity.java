@@ -3,17 +3,21 @@ package dev.abhishekprakash.cart.Entities;
 import lombok.Value;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Value
 public class CartItemEntity implements Serializable {
 
-    String productName;
+    String productTitle;
 
     Integer quantity;
 
-    public CartItemEntity(String productName, Integer quantity) {
-        this.productName = productName;
+    BigDecimal totalPrice;
+
+    public CartItemEntity(String productTitle, Integer quantity, BigDecimal totalPrice) {
+        this.productTitle = productTitle;
         this.quantity = quantity;
+        this.totalPrice = totalPrice;
     }
 
 }
