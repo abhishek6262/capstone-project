@@ -16,7 +16,7 @@ public class ProductServiceClient {
     }
 
     public ProductDTO getProductById(Long productId) {
-        return restTemplate.getForObject(BASE_PRODUCTS_URL + "/" + productId, ProductDTO.class);
+        return restTemplate.getForObject("http://localhost:8083/api/v1/products/1", ProductDTO.class);
     }
 
 }
