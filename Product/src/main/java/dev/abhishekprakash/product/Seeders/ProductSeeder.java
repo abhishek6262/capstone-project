@@ -41,9 +41,11 @@ public class ProductSeeder implements CommandLineRunner {
         List<CategoryEntity> categories = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
-            categories.add(CategoryEntity.builder()
-                    .name(faker.commerce().department())
-                    .build());
+            CategoryEntity categoryEntity = new CategoryEntity();
+
+            categoryEntity.setName(faker.commerce().department());
+
+            categories.add(categoryEntity);
         }
 
         categoryRepository.saveAll(categories);

@@ -1,17 +1,13 @@
 package dev.abhishekprakash.product.Entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "categories")
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@Data
+@Getter
+@Setter
 public class CategoryEntity {
 
     @Id
