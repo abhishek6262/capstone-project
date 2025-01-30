@@ -16,6 +16,6 @@ public interface ProductMapper {
     @Mapping(source = "price", target = "price")
     @Mapping(source = "createdAt", target = "createdAt")
     @Mapping(source = "updatedAt", target = "updatedAt")
-    ProductResponseDTO toDto(ProductEntity productEntity);
+    ProductResponseDTO toResponseDto(ProductEntity productEntity);
 
 }

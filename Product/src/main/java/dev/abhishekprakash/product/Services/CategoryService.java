@@ -25,7 +25,7 @@ public class CategoryService {
         List<CategoryEntity> categoryEntities = categoryRepository.findAll();
 
         return categoryEntities.stream()
-                .map(categoryMapper::toDto)
+                .map(categoryMapper::toResponseDto)
                 .collect(Collectors.toList());
     }
 

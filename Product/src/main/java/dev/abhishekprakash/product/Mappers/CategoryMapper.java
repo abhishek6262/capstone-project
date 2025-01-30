@@ -10,6 +10,6 @@ public interface CategoryMapper {
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
-    CategoryResponseDTO toDto(CategoryEntity categoryEntity);
+    CategoryResponseDTO toResponseDto(CategoryEntity categoryEntity);
 
 }

@@ -26,7 +26,7 @@ public class SearchService {
                 productRepository.findAllByTitleContainingIgnoreCaseAndCategory_Id(query, categoryId.get(), pageable) :
                 productRepository.findAllByTitleContainingIgnoreCase(query, pageable);
 
-        return productEntities.map(productMapper::toDto);
+        return productEntities.map(productMapper::toResponseDto);
     }
 
 }

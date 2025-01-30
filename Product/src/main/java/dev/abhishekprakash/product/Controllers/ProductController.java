@@ -1,6 +1,8 @@
 package dev.abhishekprakash.product.Controllers;
 
 import dev.abhishekprakash.product.DTOs.ProductResponseDTO;
+import dev.abhishekprakash.product.Entities.ProductEntity;
+import dev.abhishekprakash.product.Mappers.ProductMapper;
 import dev.abhishekprakash.product.Services.ProductService;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -20,10 +22,13 @@ import java.util.Optional;
 @Validated
 public class ProductController {
 
+    private final ProductMapper productMapper;
+
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, ProductMapper productMapper) {
         this.productService = productService;
+        this.productMapper = productMapper;
     }
 
     @GetMapping
@@ -33,13 +38,16 @@ public class ProductController {
             @RequestParam(defaultValue = "10") @Min(1) @Max(100) Integer size
     ) {
         Pageable pageable = PageRequest.of(page, size);
+        Page<ProductEntity> products = productService.getProducts(categoryId, pageable);
 
-        return ResponseEntity.ok(productService.getProducts(categoryId, pageable));
+        return ResponseEntity.ok(products.map(productMapper::toResponseDto));
     }
 
     @GetMapping("{productId}")
     public ResponseEntity<ProductResponseDTO> getProduct(@PathVariable @Positive Long productId) {
-        return ResponseEntity.ok(productService.getProductById(productId));
+        ProductEntity product = productService.getProductById(productId);
+
+        return ResponseEntity.ok(productMapper.toResponseDto(product));
     }
 
 }
